@@ -112,7 +112,7 @@
                 var decrypted = CryptoJS.AES.decrypt(encrypted, key, { iv: iv });
                 document.getElementById('byte_content').textContent = 
                 CryptoJS.enc.Utf8.stringify(decrypted);
-                console.log("dec: " + decrypted);
+                //console.log("dec: " + decrypted);
             }
         };
 

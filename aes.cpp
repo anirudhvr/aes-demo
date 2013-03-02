@@ -1,5 +1,5 @@
 //
-//  enc-dec.cpp
+//  aes.cpp
 //  Youcrypt
 //
 //  Created by Anirudh Ramachandran <avr@nouvou.com> on 3/1/13.
@@ -79,10 +79,12 @@ encrypt_file(const string &sourcefile, const string &destfile,
         goto free_data;
     }
     
+    /*
     cerr << "key: ";
     for(i = 0; i < default_keysize_/8; ++i)
         fprintf(stderr, "%02x", key[i]);
     cerr << endl;
+    */
     
     // 4. Initialize encryption engine / context / etc.
     snprintf(ciphername, 99, "%s-%d-%s",
@@ -93,7 +95,7 @@ encrypt_file(const string &sourcefile, const string &destfile,
         goto free_data;
     }
     EVP_CIPHER_CTX_init(&enc_ctx);
-    if (!EVP_EncryptInit_ex(&enc_ctx, EVP_aes_256_cbc(), NULL, key, iv)) {
+    if (!EVP_EncryptInit_ex(&enc_ctx, ciph, NULL, key, iv)) {
         // returns 0 for failure (wtf?)
         cerr << "Cannot initialize encryption cipher " << ciphername << endl;
         goto free_data;
@@ -203,7 +205,7 @@ decrypt_file(const string &sourcefile, const string &destfile,
         goto free_data;
     }
     EVP_CIPHER_CTX_init(&dec_ctx);
-    if (!EVP_DecryptInit_ex(&dec_ctx, EVP_aes_256_cbc(), NULL, key, iv)) {
+    if (!EVP_DecryptInit_ex(&dec_ctx, ciph, NULL, key, iv)) {
         // returns 0 for failure (wtf?)
         cerr << "Cannot initialize decryption cipher " << ciphername << endl;
         goto free_data;
