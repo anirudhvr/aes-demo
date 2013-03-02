@@ -138,6 +138,7 @@ encrypt_file(const string &sourcefile, const string &destfile,
     
 free_data:
     delete [] key;
+    delete [] iv;
     
     return rc;
 }
@@ -243,6 +244,7 @@ decrypt_file(const string &sourcefile, const string &destfile,
     rc = 0;
 free_data:
     delete [] key;
+    delete [] iv;
     return rc;
 }
 
