@@ -3,12 +3,10 @@
 //  Youcrypt
 //  Short example of how to use OpenSSL's AES CCM (Authenticated
 //  encryption using Counter+CBC-MAC)
-//
-//
 //  Created by Anirudh Ramachandran <avr@nouvou.com> on 4/5/13.
 //  Copyright (c) 2013 Nouvou Inc. All rights reserved.
 //
-//  Compile: g++ -o aes aes.cpp -lcrypto
+//  Compile: g++ -g -I /opt/local/include/ -L/opt/local/lib aes-ccm.cpp  -lcrypto -lssl -lboost_filesystem-mt -lboost_system-mt  -lboost_iostreams-mt
 //
 
 #include <cstring>
