@@ -1,0 +1,257 @@
+# .bashrc
+# thanks: http://www.gnoedi.org/~straw/pub/configs/bashrc
+
+# User specific aliases and functions
+
+# Source global definitions
+if [ -f /etc/bashrc ]; then
+	. /etc/bashrc
+fi
+
+### BASH OPTIONS ###
+
+shopt -s cdspell
+shopt -s checkwinsize
+shopt -s cmdhist
+shopt -s extglob
+shopt -s hostcomplete
+shopt -s no_empty_cmd_completion
+
+#EXPORTS
+
+#export LS_COLORS='no=00:fi=00:di=00;33:ln=00;36:pi=40;33:so=00;35:bd=40;33;01:cd=40;33;01:or=01;05;37;41:mi=01;05;37;41:ex=00;32:*.cmd=00;32:*.exe=00;32:*.com=00;32:*.btm=00;32:*.bat=00;32:*.sh=00;32:*.csh=00;32:*.tar=00;31:*.tgz=00;31:*.arj=00;31:*.taz=00;31:*.lzh=00;31:*.zip=00;31:*.z=00;31:*.Z=00;31:*.gz=00;31:*.bz2=00;31:*.bz=00;31:*.tz=00;31:*.rpm=00;31:*.cpio=00;31:*.jpg=00;35:*.gif=00;35:*.bmp=00;35:*.xbm=00;35:*.xpm=00;35:*.png=00;35:*.tif=00;35:*.cpp=01;34:*.c=01;34:*.h=01;35'
+
+# thanks: http://www.gnoedi.org/~straw/pub/configs/bashrc
+# Black       0;30     Bold Gray    1;30
+# Blue        0;34     Bold Blue    1;34
+# Green       0;32     Bold Green   1;32
+# Cyan        0;36     Bold Cyan    1;36
+# Red         0;31     Bold Red     1;31
+# Purple      0;35     Bold Purple  1;35
+# Yellow      0;33     Bold Yellow  1;33
+# White       0;37     Bold White   1;37
+
+LS_COLORS=''
+LS_COLORS=$LS_COLORS:'no=0'           # Normal text
+LS_COLORS=$LS_COLORS:'fi=0'           # Regular file
+LS_COLORS=$LS_COLORS:'di=36'          # Directory
+LS_COLORS=$LS_COLORS:'ln=01;36'       # Symbolic link
+LS_COLORS=$LS_COLORS:'pi=33'          # Named pipe
+LS_COLORS=$LS_COLORS:'so=01;35'       # Socket
+LS_COLORS=$LS_COLORS:'do=01;35'       # DO
+LS_COLORS=$LS_COLORS:'bd=01;37'       # Block device
+LS_COLORS=$LS_COLORS:'cd=01;37'       # Character device
+LS_COLORS=$LS_COLORS:'ex=35'          # Executable file
+LS_COLORS=$LS_COLORS:'*FAQ=31;7'      # FAQs
+LS_COLORS=$LS_COLORS:'*README=31;7'   # READMEs
+LS_COLORS=$LS_COLORS:'*INSTALL=31;7'  # INSTALLs
+LS_COLORS=$LS_COLORS:'*.sh=47;31'     # Shell-Scripts
+LS_COLORS=$LS_COLORS:'*.vim=35'       # Vim-"Scripts"
+LS_COLORS=$LS_COLORS:'*.swp=00;44;37' # Swapfiles (Vim)
+LS_COLORS=$LS_COLORS:'*.sl=30;33'     # Slang-Scripts
+LS_COLORS=$LS_COLORS:'*,v=5;34;93'    # Versioncontrols
+LS_COLORS=$LS_COLORS:'or=01;05;31'    # Orphaned link
+LS_COLORS=$LS_COLORS:'*.c=33'         # Sources
+LS_COLORS=$LS_COLORS:'*.C=33'         # Sources
+LS_COLORS=$LS_COLORS:'*.h=33'         # Sources
+LS_COLORS=$LS_COLORS:'*.cc=33'        # Sources
+LS_COLORS=$LS_COLORS:'*.py=33'        # Sources
+LS_COLORS=$LS_COLORS:'*.rb=33'        # Sources
+LS_COLORS=$LS_COLORS:'*.awk=33'       # Sources
+LS_COLORS=$LS_COLORS:'*.pl=33'        # Sources
+LS_COLORS=$LS_COLORS:'*.jpg=0;32'     # Images
+LS_COLORS=$LS_COLORS:'*.jpeg=0;32'    # Images
+LS_COLORS=$LS_COLORS:'*.JPG=0;32'     # Images
+LS_COLORS=$LS_COLORS:'*.gif=0;32'     # Images
+LS_COLORS=$LS_COLORS:'*.png=0;32'     # Images
+LS_COLORS=$LS_COLORS:'*.jpeg=0;32'    # Images
+LS_COLORS=$LS_COLORS:'*.ppm=0;32'     # Images
+LS_COLORS=$LS_COLORS:'*.pgm=0;32'     # Images
+LS_COLORS=$LS_COLORS:'*.pbm=0;32'     # Images
+LS_COLORS=$LS_COLORS:'*.tar=31'       # Archive
+LS_COLORS=$LS_COLORS:'*.tgz=31'       # Archive
+LS_COLORS=$LS_COLORS:'*.gz=31'        # Archive
+LS_COLORS=$LS_COLORS:'*.zip=31'       # Archive
+LS_COLORS=$LS_COLORS:'*.sit=31'       # Archive
+LS_COLORS=$LS_COLORS:'*.lha=31'       # Archive
+LS_COLORS=$LS_COLORS:'*.lzh=31'       # Archive
+LS_COLORS=$LS_COLORS:'*.rar=31'       # Archive
+LS_COLORS=$LS_COLORS:'*.arj=31'       # Archive
+LS_COLORS=$LS_COLORS:'*.bz2=31'       # Archive
+LS_COLORS=$LS_COLORS:'*.avi=35'       # Video
+LS_COLORS=$LS_COLORS:'*.mpg=35'       # Video
+LS_COLORS=$LS_COLORS:'*.mpeg=35'      # Video
+LS_COLORS=$LS_COLORS:'*.divx=35'      # Video
+LS_COLORS=$LS_COLORS:'*.xvid=35'      # Video
+LS_COLORS=$LS_COLORS:'*.mov=35'       # Video
+LS_COLORS=$LS_COLORS:'*.mp4=35'       # Video
+LS_COLORS=$LS_COLORS:'*.m4v=35'       # Video
+LS_COLORS=$LS_COLORS:'*.wmv=35'       # VIdeo
+LS_COLORS=$LS_COLORS:'*.mp3=37'       # Audio
+LS_COLORS=$LS_COLORS:'*.ogg=37'       # Audio
+LS_COLORS=$LS_COLORS:'*.wav=37'       # Audio
+LS_COLORS=$LS_COLORS:'*.au=37'        # Audio
+LS_COLORS=$LS_COLORS:'*.html=36'      # HTML
+LS_COLORS=$LS_COLORS:'*.htm=1;34'     # HTML
+LS_COLORS=$LS_COLORS:'*.php=1;45'     # PHP
+LS_COLORS=$LS_COLORS:'*.doc=1;34'     # MS-Word
+LS_COLORS=$LS_COLORS:'*.txt=1;34'     # Plain/Text
+LS_COLORS=$LS_COLORS:'*.o=1;36'       # Object-Files
+LS_COLORS=$LS_COLORS:'*.a=1;36'       # Shared-libs
+export LS_COLORS
+
+
+function parse_git_branch () {
+    git branch 2> /dev/null | sed -e '/^[^*]/d' -e 's/* \(.*\)/ (\1)/'
+}
+
+RED="\[\033[0;31m\]"
+YELLOW="\[\033[0;33m\]"
+GREEN="\[\033[0;32m\]"
+NO_COLOUR="\[\033[0m\]"
+
+source $HOME/.git-completion.bash
+
+  #PS1="\u$NO_COLOUR:\w$RED\$(parse_git_branch)$NO_COLOUR\$ "
+
+
+# paths
+export PATH=/opt/local/bin:/sbin/:$PATH
+
+
+#aliases
+alias free='free -mt'
+alias vi='vim'
+alias m='mplayer -vo fbdev -vop scale=1024:768'
+alias cd..='cd ..'
+alias sl='ls'
+alias p='cd -'
+alias s='cd ..'
+#alias gcc='gcc -Wall'
+alias dc='cd'
+#alias xterm="xterm -ls -fa 'bitstream vera sans mono-12' -j -bg black -fg white +sb +ah -cr red -s -bw 0"
+alias ltx="latex $i.tex && dvips $1.ps && ps2pdf14 $1.ps"
+alias apts="apt-cache search"
+alias apti="sudo apt-get install"
+
+alias ..='cd ..'
+alias ...='cd ../..'
+alias ....="cd ../../.."
+alias myip="lynx -dump http://davis.cc.gt.atl.ga.us/ip.php|grep your|cut -d\| -f2"
+alias setbg="xsetbg -border black -fork -type jpeg -fit -onroot -fullscreen "
+
+export EDITOR=vim
+export PS1="${debian_chroot:+($debian_chroot)}\u@\h:\w[\A]\$(parse_git_branch)\$ "
+export HOSTFILE=/etc/hosts
+
+### PROGRAMMABLE COMPLETION ###
+
+set +o nounset
+
+complete -A hostname   rsh rcp telnet rlogin ftp ping disk nmap ssh
+complete -A user       su mail finger lastlog
+complete -A export     printenv
+complete -A variable   export local readonly unset
+complete -A enabled    builtin
+complete -A alias      alias unalias
+complete -A function   function
+
+complete -A helptopic  help
+complete -A shopt      shopt
+
+# Compression
+complete -f -o default -X '*.+(zip|ZIP)'  	zip
+complete -f -o default -X '!*.+(zip|ZIP)' 	unzip
+complete -f -o default -X '*.+(z|Z)'      	compress
+complete -f -o default -X '!*.+(z|Z)'     	uncompress
+complete -f -o default -X '*.+(gz|GZ)'    	gzip
+complete -f -o default -X '!*.+(gz|GZ)'   	gunzip
+complete -f -o default -X '*.+(bz2|BZ2)'  	bzip2
+complete -f -o default -X '!*.+(bz2|BZ2)'	bunzip2
+# Postscript,pdf,dvi.....
+complete -f -o default -X '!*.ps'  			gs ghostview ps2pdf ps2ascii
+complete -f -o default -X '!*.dvi' 			dvips dvipdf xdvi dviselect dvitype
+complete -f -o default -X '!*.pdf' 			xpdf
+complete -f -o default -X '!*.+(pdf|ps)' 	gv evince
+complete -f -o default -X '!*.texi*' 		makeinfo texi2dvi texi2html texi2pdf
+complete -f -o default -X '!*.tex' 			tex latex slitex
+complete -f -o default -X '!*.lyx' 			lyx
+complete -f -o default -X '!*.+(htm*|HTM*)' lynx html2ps firefox
+# Multimedia
+complete -f -o default -X '!*.+(jp*g|gif|xpm|png|bmp)' 	display gimp qiv
+complete -f -o default -X '!*.+(mp3|MP3)' 	mpg123 mpg321 xmms cmus mplayer
+complete -f -o default -X '!*.+(ogg|OGG)' 	ogg123 xmms cmus
+# Programming
+complete -f -o default -X '!*.+(c|o|h)' 	gcc
+complete -f -o default -X '!*.+(cc|C|cpp|h|H|hpp)' 	g++
+complete -f -o default -X '!*.+(rb)' 	ruby
+complete -f -o default -X '!*.+(pl|pm)' 	perl
+complete -f -o default -X '!*.+(py)' 	python
+
+
+
+
+# This is a 'universal' completion function - it works when commands have
+# a so-called 'long options' mode , ie: 'ls --all' instead of 'ls -a'
+
+_get_longopts () 
+{ 
+    $1 --help | sed  -e '/--/!d' -e 's/.*--\([^[:space:].,]*\).*/--\1/'| \
+grep ^"$2" |sort -u ;
+}
+
+_longopts_func ()
+{
+    case "${2:-*}" in
+	-*)	;;
+	*)	return ;;
+    esac
+
+    case "$1" in
+	\~*)	eval cmd="$1" ;;
+	*)	cmd="$1" ;;
+    esac
+    COMPREPLY=( $(_get_longopts ${1} ${2} ) )
+}
+
+complete  -o default -F _longopts_func configure bash gcc ssh 
+complete  -o default -F _longopts_func wget id info a2ps ls recode
+
+
+# EOF
+
+
+#PROMPT_HOSTNAME='ME'
+#PROMPT_COLOR1='1;38m'
+
+# If I am root, set the prompt to bright red
+#if [ ${UID} -eq 0 ]; then
+#	PROMPT_COLOR='1;31m'
+#	export PS1='\[\e[$PROMPT_COLOR\]${debian_chroot:+($debian_chroot)}\u@\h:\w\$ \[\e[$PROMPT_COLOR1\]'
+#fi
+
+#case ${TERM} in
+	#xterm*)
+	#PS1='\[\e]1;${PROMPT_HOSTNAME}\a\e]2;${PROMPT_HOSTNAME}:${PWD}\a\
+	#\e[${PROMPT_COLOR}\][\u@${PROMPT_HOSTNAME} \w] \#\$ \[\e[m\]'
+	#;;
+	#vt100)
+	#PS1='[\u@${PROMPT_HOSTNAME} \w] \#\$ '
+	#;;
+	#*)
+	#PS1='\[\e[${PROMPT_COLOR}\][\u@${PROMPT_HOSTNAME} \w] \#\$ \[\e[m\]'
+	#;;
+#esac
+
+
+alias setbg="xsetbg -border black -fork -type jpeg -fit -onroot -fullscreen"
+alias attach="$HOME/bin/grabssh; screen -d -R"
+alias fixssh="source $HOME/bin/fixssh"
+# fix mrxvt bugginess
+alias fixterm="export LC_CTYPE=zh_CN.GB2312"
+export LSCOLORS=dxFxBxDxCxegedabagacad
+alias ls="ls -FG"
+
+PATH=$PATH:/usr/local/google_appengine/:$HOME/.rvm/bin:$HOME/bin # Add RVM to PATH for scripting
+DYLD_LIBRARY_PATH=/opt/local/lib:$DYLD_LIBRARY_PATH
+
