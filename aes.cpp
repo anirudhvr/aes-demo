@@ -30,7 +30,7 @@ const string default_encryption_cipher_ = "aes";
 const int default_keysize_ = 256;
 const int default_blocksize_ = 128;
 const string default_encryption_mode_ = "cbc";
-const unsigned   default_pbkdf2_iterations_ = 5;
+const unsigned   default_pbkdf2_iterations_ = 1000;
 const unsigned   default_pbkdf2_saltlen_ = 8;
 
 int
@@ -66,8 +66,8 @@ encrypt_file(const string &sourcefile, const string &destfile,
     unsigned char salt_value[default_pbkdf2_saltlen_];
     unsigned char *key = NULL, *iv = NULL; 
     
-    iv = new unsigned char [default_keysize_ / 8];
-    std::fill(iv, iv + default_keysize_/8, 0); //XXX using a zero IV for now
+    iv = new unsigned char [default_keysize_ / 16];
+    std::fill(iv, iv + default_keysize_/16, 0); //XXX using a zero IV for now
     
     std::fill(salt_value, salt_value + sizeof(salt_value), 's'); //XXX fixed salt
     key = new unsigned char [default_keysize_ / 8];
@@ -79,12 +79,10 @@ encrypt_file(const string &sourcefile, const string &destfile,
         goto free_data;
     }
     
-    /*
     cerr << "key: ";
     for(i = 0; i < default_keysize_/8; ++i)
         fprintf(stderr, "%02x", key[i]);
     cerr << endl;
-    */
     
     // 4. Initialize encryption engine / context / etc.
     snprintf(ciphername, 99, "%s-%d-%s",
@@ -175,8 +173,8 @@ decrypt_file(const string &sourcefile, const string &destfile,
     unsigned char salt_value[default_pbkdf2_saltlen_];
     unsigned char *key = NULL, *iv = NULL; 
     
-    iv = new unsigned char [default_keysize_ / 8];
-    std::fill(iv, iv + default_keysize_/8, 0); //XXX fixed all-zero IV
+    iv = new unsigned char [default_keysize_ / 16];
+    std::fill(iv, iv + default_keysize_/16, 0); //XXX fixed all-zero IV
     std::fill(salt_value, salt_value + sizeof(salt_value), 's'); //XXX fixed salt
     key = new unsigned char [default_keysize_ / 8];
     if(!PKCS5_PBKDF2_HMAC(passphrase.c_str(), passphrase.length(), salt_value,
