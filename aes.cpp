@@ -26,7 +26,6 @@ const int BUFSIZE = 4096;
 
 using namespace std;
 
-const string random_pass_file_magic_ =  "YCRANDOMFILE";
 const string default_encryption_cipher_ = "aes";
 const int default_keysize_ = 256;
 const int default_blocksize_ = 128;
@@ -72,8 +71,9 @@ encrypt_file(const string &sourcefile, const string &destfile,
     
     std::fill(salt_value, salt_value + sizeof(salt_value), 's'); //XXX fixed salt
     key = new unsigned char [default_keysize_ / 8];
-    if(!PKCS5_PBKDF2_HMAC_SHA1(passphrase.c_str(), passphrase.length(), salt_value,
+    if(!PKCS5_PBKDF2_HMAC(passphrase.c_str(), passphrase.length(), salt_value,
                               sizeof(salt_value), default_pbkdf2_iterations_,
+                              EVP_sha256(),
                                default_keysize_ / 8, key)) {
         cerr << "Cannot derive key from password " << endl;
         goto free_data;
@@ -100,10 +100,6 @@ encrypt_file(const string &sourcefile, const string &destfile,
         cerr << "Cannot initialize encryption cipher " << ciphername << endl;
         goto free_data;
     }
-    
-    // 5.1 Write magic chars to the header ofoutput file
-    // This is so we can check if a file can be decrypted by us
-    ofile.write(random_pass_file_magic_.c_str(), random_pass_file_magic_.length());
     
     // 5.2 Read source file block, encrypt, and write to output stream
     while (!ifile.eof()) {
@@ -167,14 +163,7 @@ decrypt_file(const string &sourcefile, const string &destfile,
     // 2. Check that input file is of the type we expect
     //    by checking for magic string at header of file
     char magic[128] = {0};
-    ifile.read(magic, random_pass_file_magic_.length());
-    if (!(ifile.gcount() == random_pass_file_magic_.length() &&
-          random_pass_file_magic_.compare(magic) == 0)) {
-        cerr << "Input file " << sourcefile <<
-        " does not appear to be encrypted with our scheme" << endl;
-        return rc;
-    }
-    
+
     // 2. Check that output file can be opened and written to
     ofile.open(destfile.c_str(), ios::out | ios::binary | ios::trunc);
     if (!ofile.is_open()) {
@@ -190,8 +179,9 @@ decrypt_file(const string &sourcefile, const string &destfile,
     std::fill(iv, iv + default_keysize_/8, 0); //XXX fixed all-zero IV
     std::fill(salt_value, salt_value + sizeof(salt_value), 's'); //XXX fixed salt
     key = new unsigned char [default_keysize_ / 8];
-    if(!PKCS5_PBKDF2_HMAC_SHA1(passphrase.c_str(), passphrase.length(), salt_value,
+    if(!PKCS5_PBKDF2_HMAC(passphrase.c_str(), passphrase.length(), salt_value,
                               sizeof(salt_value), default_pbkdf2_iterations_,
+                              EVP_sha256(),
                                default_keysize_ / 8, key)) {
         cerr << "Cannot derive key from password " << endl;
         goto free_data;
