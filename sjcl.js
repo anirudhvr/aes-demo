@@ -918,6 +918,8 @@ sjcl.mode.ccm = {
         ol = w.bitLength(ciphertext), 
         out = w.clamp(ciphertext, ol - tlen),
         tag = w.bitSlice(ciphertext, ol - tlen), tag2;
+
+    console.log("sliced tag: " + sjcl.codec.hex.fromBits(tag));
     
 
     ol = (ol - tlen) / 8;
@@ -936,6 +938,11 @@ sjcl.mode.ccm = {
     
     // check the tag
     tag2 = sjcl.mode.ccm._computeTag(prf, out.data, iv, adata, tlen, L);
+
+    console.log("file tag: " + sjcl.codec.hex.fromBits(out.tag) + 
+            ", computed tag: " +  sjcl.codec.hex.fromBits(tag2));
+
+
     if (!w.equal(out.tag, tag2)) {
       throw new sjcl.exception.corrupt("ccm: tag doesn't match");
     }

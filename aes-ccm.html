@@ -91,6 +91,7 @@
                 p.iv = sjcl.codec.bytes.toBits(iv);
                 p.adata = "";
                 p.ts = 128;
+                p.ks = 256;
                 p.salt = [];
                 var aes = new sjcl.cipher.aes(key);
                 var decrypted = sjcl.mode[p.mode].decrypt(aes, sjcl.codec.bytes.toBits(new Uint8Array(evt.target.result)), p.iv, p.adata, p.ts);   
