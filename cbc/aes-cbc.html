@@ -1,0 +1,123 @@
+<html>
+    <head> 
+
+        <script src="file:///Users/avr/code/scratch/aes/sjcl.js"></script>
+    </head>
+
+    <body>
+
+        <h2> Decrypt files encrypted with OpenSSL AES-256-CCM with PBKDF2 key derivation </h2>
+
+        <div class="row">
+            <div class="span3 offset2">
+                Choose file
+            </div>
+            <div class="span3" id="upload_file_container">
+                <input type="file" id="files" name="file" />  
+            </div>
+        </div>
+        <div class="row">
+            <div class="span3 offset2">
+                Enter password
+            </div>
+            <div class="span3">
+                <input type="password" id="passwordfield" name="passwordfield" alt="pass" />
+            </div>
+        </div>
+
+        <div class="row">
+            <div class="span4 offset5">
+                <span class="readBytesButtons"> 
+                    <button>Read and decrypt file</button> 
+                </span>
+            </div>
+        </div>
+
+        <div class="row">
+            <div class="span2"> Encrypted file contents: </div>
+            <div class="span4"> 
+                <div class="well well-large">
+                    <div id="enc_content"></div>
+                    <div id="decrypt-error"></div>
+                </div>
+            </div>
+        </div>
+
+        <div class="row">
+            <div class="span2"> Decrypted file contents: </div>
+            <div class="span4"> 
+                <div class="well well-large">
+                    <div id="dec_content"></div>
+                    <div id="decrypt-error"></div>
+                </div>
+            </div>
+        </div>
+
+
+
+    </div>
+</div>
+
+
+
+<script>
+    function decrypt() {
+
+        var password = document.getElementById("passwordfield").value;
+        console.log("Got pass " + password);
+        var files = document.getElementById('files').files;
+        if (!files.length) {
+            alert('Please select a file!');
+            return;
+        }
+
+        var file = files[0];
+
+        var key = sjcl.misc.pbkdf2(password, sjcl.codec.utf8String.toBits('ssssssss'), 1000, 256)
+
+        console.log("got key: " + sjcl.codec.hex.fromBits(key));
+
+        // console.log("Key: " + CryptoJS.enc.Hex.stringify(key));
+        var file_reader = new FileReader();
+
+        file_reader.onloadend = function(evt) {
+            if (evt.target.readyState == FileReader.DONE) { // DONE == 2
+
+                var p = sjcl.json.defaults; 
+                var iv  = new Uint8Array(16);
+                for (var i = 0; i < iv.length; ++i) {
+                    iv[i] = 0;
+                }
+                p.iv = sjcl.codec.bytes.toBits(iv);
+                p.adata = "";
+                p.ts = 128;
+                p.salt = [];
+                var aes = new sjcl.cipher.aes(key);
+                var decrypted = sjcl.mode["cbc"].decrypt(aes, sjcl.codec.bytes.toBits(new Uint8Array(evt.target.result)), p.iv); 
+                
+                document.getElementById('byte_content').textContent = sjcl.codec.utf8String.fromBits(decrypted);
+                //console.log("dec: " + decrypted);
+            }
+        };
+
+        var blob = file.slice(0, file.size);
+        file_reader.readAsArrayBuffer(blob);
+    }
+
+    document.querySelector('.readBytesButtons').addEventListener('click', function(evt) {
+        if (evt.target.tagName.toLowerCase() == 'button') {
+            decrypt();
+        }
+    }, false);
+</script>
+
+
+<br/>
+<br/>
+<br/>
+
+</body>
+
+
+</html>
+
