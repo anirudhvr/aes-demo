@@ -33,7 +33,7 @@ namespace bf = boost::filesystem;
 namespace bi = boost::iostreams;
 
 const string default_encryption_cipher_ = "aes";
-const int default_keysize_ = 128;
+const int default_keysize_ = 256;
 const int default_blocksize_ = 128;
 const string default_encryption_mode_ = "cbc";
 const unsigned   default_pbkdf2_iterations_ = 1000;
@@ -71,7 +71,7 @@ encrypt_file(const string &sourcefile, const string &destfile,
     unsigned char *key = NULL, *iv = NULL;
     size_t keylen, ivlen;
     keylen = default_keysize_ / 8;
-    ivlen = default_keysize_ / 8; // half of default keysize
+    ivlen = keylen / 2; // half of default keysize
 
     // auth data
     const char *adata = "";
@@ -121,7 +121,7 @@ encrypt_file(const string &sourcefile, const string &destfile,
     
     // 4. Initialize encryption engine / context / etc.
     EVP_CIPHER_CTX_init(&ctx);
-    if (!EVP_EncryptInit(&ctx, EVP_aes_128_ccm(), 0, 0)) {
+    if (!EVP_EncryptInit(&ctx, EVP_aes_256_ccm(), 0, 0)) {
         cerr << "Cannot initialize encryption cipher with ccm" << endl;
         goto free_data;
     }
@@ -215,7 +215,7 @@ decrypt_file(const string &sourcefile, const string &destfile,
     unsigned char *key = NULL, *iv = NULL; 
     size_t keylen, ivlen;
     keylen = default_keysize_ / 8;
-    ivlen = default_keysize_ / 8;
+    ivlen = keylen / 2;
 
     // auth data
     const char *adata = "";
@@ -260,7 +260,7 @@ decrypt_file(const string &sourcefile, const string &destfile,
     
     // 4. Initialize decryption engine / context / etc.
     EVP_CIPHER_CTX_init(&ctx);
-    if (!EVP_DecryptInit(&ctx, EVP_aes_128_ccm(), 0, 0)) {
+    if (!EVP_DecryptInit(&ctx, EVP_aes_256_ccm(), 0, 0)) {
         cerr << "Cannot initialize decryption cipher with ccm" << endl;
         goto free_data;
     }
