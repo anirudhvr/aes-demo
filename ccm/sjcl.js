@@ -893,6 +893,7 @@ sjcl.mode.ccm = {
     
     // compute the tag
     tag = sjcl.mode.ccm._computeTag(prf, plaintext, iv, adata, tlen, L);
+    console.log("encryption tag: " + sjcl.codec.hex.fromBits(tag));
     
     // encrypt
     out = sjcl.mode.ccm._ctrMode(prf, out, iv, tag, tlen, L);
